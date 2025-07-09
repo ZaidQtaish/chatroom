@@ -1,5 +1,5 @@
 body {
-    background-color: #fffffe;
+    background-color: #131316;
     font-family: 'Inter', sans-serif;
     color: #fffffe;
 }
@@ -14,7 +14,7 @@ body {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background-color: #ffd803;
+    background-color: #ff8906;
     border: none;
     display: flex;
     align-items: center;
@@ -24,7 +24,8 @@ body {
 .chat {
     width: 99%;
     margin: auto;
-    background-color: #e3f6f5;
+    background-color: #0f0e17;
+    border-radius: 12px !important;
 }
 
 .messages {
@@ -34,10 +35,10 @@ body {
 }
 
 .card-header {
-    background-color: #ffd803;
+    background-color: #f25f4c;
     font-weight: 500;
     font-size: 1.2rem;
-    color: #272343 !important;
+    border-radius: 12px 12px 0 0 !important;
 }
 
 .card-header, .chat {
@@ -45,17 +46,21 @@ body {
 }
 
 #input {
-    background-color: #fffffe;
+    background-color: #f25f4c;
+    border: none;
+    color: #fff;
 }
 
 .list-group-item {
-    background-color: #bae8e8;
+    background-color: #ff8906;
+    color: #fff;
     border-radius: 30px !important;
     width: fit-content;
-    padding: 10px 20px;
+    padding: 8px 20px;
     margin: 10px 0;
     max-width: 80%;
     word-break: break-word;
+    border: none;
 }
 
 .system-message {
