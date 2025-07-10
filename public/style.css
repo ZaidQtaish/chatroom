@@ -11,11 +11,15 @@ body {
 }
 
 .btn {
+    background-color: #ff8906;
+    border: none;
+    color: #fff;
+}
+
+.chat .btn {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background-color: #ff8906;
-    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,7 +39,7 @@ body {
 }
 
 .card-header {
-    background-color: #f25f4c;
+    background-color: #ff8906;
     font-weight: 500;
     font-size: 1.2rem;
     border-radius: 12px 12px 0 0 !important;
@@ -46,9 +50,19 @@ body {
 }
 
 #input {
-    background-color: #f25f4c;
+    background-color: #ff8906;
     border: none;
     color: #fff;
+}
+
+#input::placeholder {
+    color: #fff;
+    opacity: 0.7;
+}
+
+input:focus {
+    box-shadow: none !important;
+    outline: none !important;
 }
 
 .list-group-item {

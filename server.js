@@ -9,18 +9,23 @@ const io = new Server(server);
 // Serve static files from the "public" directory
 app.use(express.static('public'));
 
-io.on('connection', (socket) => {
+io.on('connection', socket => {
     console.log('A user connected with ID:', socket.id);
 
     // Notify all clients that a user joined
-    io.emit('system', `User ${socket.id.substring(0, 6)} has joined the chat`);
-
-    socket.on('disconnect', () => {
-        console.log('A user disconnected with ID:', socket.id);
+    socket.on('leave', username => {
+        console.log(`User ${username} has left the chat`);
         io.emit('system', `User ${socket.id.substring(0, 6)} has left the chat`);
     });
 
-    socket.on('message', (data) => {
+    // Handle username submission
+    socket.on('username', username => {
+        console.log(`Username set for ${socket.id}: ${username}`);
+        io.emit('system', `User ${username} has joined the chat`);
+    });
+
+    // Handle incoming messages
+    socket.on('message', data => {
         console.log(`Message from ${socket.id}: ${data}`);
         io.emit('message', data);
     });
