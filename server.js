@@ -12,22 +12,23 @@ app.use(express.static('public'));
 io.on('connection', socket => {
     console.log('A user connected with ID:', socket.id);
 
-    // Notify all clients that a user joined
-    socket.on('leave', username => {
-        console.log(`User ${username} has left the chat`);
-        io.emit('system', `User ${socket.id.substring(0, 6)} has left the chat`);
-    });
-
     // Handle username submission
     socket.on('username', username => {
+        socket.username = username;
         console.log(`Username set for ${socket.id}: ${username}`);
         io.emit('system', `User ${username} has joined the chat`);
     });
 
+    // Notify all clients that a user joined
+    socket.on('disconnect', () => {
+        console.log(`User ${socket.username} has left the chat`);
+        io.emit('system', `User ${socket.username} has left the chat`);
+    });
+
     // Handle incoming messages
-    socket.on('message', data => {
-        console.log(`Message from ${socket.id}: ${data}`);
-        io.emit('message', data);
+    socket.on('message', msg => {
+        console.log(`Message from ${socket.username}: ${msg}`);
+        io.emit('message', { msg, username: socket.username });
     });
 });
 

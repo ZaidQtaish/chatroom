@@ -2,33 +2,39 @@
 const socket = io();
 
 // Log when connected
-socket.on('system', (data) => {
-    console.log('Connected to the server, ID:', socket.id);
+socket.on('system', (sysMsg) => {
     const messages = document.getElementById('messages');
     const li = document.createElement('li');
     li.className = 'system-message';
-    li.textContent = data;
-    messages.appendChild(li);
-});
-
-socket.on('disconnect', () => {
-    socket.emit('leave', socket.id, username);
-    const messages = document.getElementById('messages');
-    const li = document.createElement('li');
-    li.className = 'system-message';
-    li.textContent = 'You have been disconnected from the server';
+    li.textContent = sysMsg;
     messages.appendChild(li);
 });
 
 // Log when receiving a message
-socket.on('message', (data) => {
-    console.log(`Message from server: ${data}`);
-    // Add the message to the chat
+socket.on('message', data => {
+    console.log(`Message from server: ${data.msg}`);
     const messages = document.getElementById('messages');
+
+    // Create wrapper div
+    const wrapper = document.createElement('div');
+    wrapper.className = 'message-wrapper';
+
+    // Username above
+    const userTag = document.createElement('small');
+    userTag.className = 'username';
+    userTag.textContent = data.username;
+
+    // Message bubble
     const li = document.createElement('li');
     li.className = 'list-group-item';
-    li.textContent = data;
-    messages.appendChild(li);
+    li.textContent = data.msg;
+
+    // Append username and bubble
+    wrapper.appendChild(userTag);
+    wrapper.appendChild(li);
+
+    messages.appendChild(wrapper);
+    messages.scrollTop = messages.scrollHeight; // Scroll to the bottom
 });
 
 // Handle form submission
@@ -45,12 +51,12 @@ document.getElementById('form').addEventListener('submit', (e) => {
 });
 
 // Show the username modal when the page loads
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var usernameModal = new bootstrap.Modal(document.getElementById('usernameModal'));
     usernameModal.show();
 });
 
-document.getElementById('usernameForm').addEventListener('submit', function(e) {
+document.getElementById('usernameForm').addEventListener('submit', function (e) {
     e.preventDefault();
     const usernameInput = document.getElementById('usernameInput');
     const username = usernameInput.value.trim();
@@ -61,5 +67,8 @@ document.getElementById('usernameForm').addEventListener('submit', function(e) {
         // Hide the modal
         var usernameModal = bootstrap.Modal.getInstance(document.getElementById('usernameModal'));
         usernameModal.hide();
+        
+        // Focus onthe input field
+        document.getElementById('input').focus();
     }
 });
