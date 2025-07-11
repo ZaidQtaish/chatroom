@@ -4,10 +4,10 @@ body {
     color: #fffffe;
 }
 
-.send-img {
-    width: 15px;
-    height: auto;
-    filter: brightness(0);
+.fa-paper-plane {
+    color: #000;
+    margin-right: 2px;
+    font-size: 1.1rem;
 }
 
 .btn {
@@ -50,9 +50,10 @@ body {
 }
 
 #input {
-    background-color: #ff8906;
+    background-color: #2b2b2b;
     border: none;
     color: #fff;
+    border-radius: 7px;
 }
 
 #input::placeholder {
@@ -98,4 +99,14 @@ input:focus {
     margin: 10px 0;
     font-family: 'Lucida', monospace;
     font-weight: 500;
+}
+
+.client-message .list-group-item {
+    align-self: flex-end !important;
+    background-color: #f25f4c !important;
+    color: #fff;
+}
+
+.client-message .username {
+    display: none;
 }

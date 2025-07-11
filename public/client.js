@@ -1,6 +1,8 @@
 // Connect to the server
 const socket = io();
 
+let yourUsername = '';
+
 // Log when connected
 socket.on('system', (sysMsg) => {
     const messages = document.getElementById('messages');
@@ -29,6 +31,9 @@ socket.on('message', data => {
     li.className = 'list-group-item';
     li.textContent = data.msg;
 
+    // Align your messages to the right
+    if (data.username === yourUsername)
+        wrapper.classList.add('client-message');
     // Append username and bubble
     wrapper.appendChild(userTag);
     wrapper.appendChild(li);
@@ -63,11 +68,12 @@ document.getElementById('usernameForm').addEventListener('submit', function (e) 
 
     if (username) {
         // Emit the username to the server
+        yourUsername = username; // Store the username
         socket.emit('username', username);
         // Hide the modal
         var usernameModal = bootstrap.Modal.getInstance(document.getElementById('usernameModal'));
         usernameModal.hide();
-        
+
         // Focus onthe input field
         document.getElementById('input').focus();
     }
