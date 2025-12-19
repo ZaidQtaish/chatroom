@@ -2,6 +2,12 @@ body {
     background-color: #131316;
     font-family: 'Inter', sans-serif;
     color: #fffffe;
+    display: flex;
+    justify-content: start;
+}
+
+.container {
+    margin-right: 0;
 }
 
 .fa-paper-plane {
@@ -109,4 +115,10 @@ input:focus {
 
 .client-message .username {
     display: none;
+}
+
+.qr {
+    width: 150px;
+    height: 150px;
+    margin: 23px 20px 0 0;
 }
