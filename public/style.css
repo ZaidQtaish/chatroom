@@ -122,3 +122,9 @@ input:focus {
     height: 150px;
     margin: 23px 20px 0 0;
 }
+
+@media (max-width: 768px) {
+    .qr {
+        display: none;
+    }
+}
