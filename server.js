@@ -29,6 +29,7 @@ io.on('connection', socket => {
     socket.on('message', msg => {
         console.log(`Message from ${socket.username}: ${msg}`);
         io.emit('message', { msg, username: socket.username });
+        });
     });
 });
 
@@ -36,4 +37,4 @@ io.on('connection', socket => {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-});
+    });
