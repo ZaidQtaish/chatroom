@@ -10,7 +10,7 @@
 
 <template>
   <div>
-    <!-- Your chatroom UI here -->
+    
   </div>
 </template>
 
