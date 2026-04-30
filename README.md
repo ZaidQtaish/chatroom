@@ -9,9 +9,7 @@ A real-time chat application built with Vue, Node.js, Express, and Socket.IO.
 - Real-time messaging with Socket.IO
 - User join/leave notifications
 - Responsive Tailwind UI
-- Auto-scroll to latest messages
-- Username modal on join
-- Smooth message display
+- Username setting on join
 
 ## Quick Start
 
@@ -19,10 +17,10 @@ A real-time chat application built with Vue, Node.js, Express, and Socket.IO.
 # Install dependencies
 npm install
 
-# Start backend server (terminal 1)
+# Start backend server
 node server.js
 
-# Start frontend dev server (terminal 2)
+# Start frontend dev server
 npm run dev
 
 # Open http://localhost:5174
