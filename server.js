@@ -11,6 +11,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*", methods: ["GET", "POST"] } });
 
+let userCount = 0;
+
 // Serve built Vue app from dist directory
 app.use(express.static('dist'));
 
@@ -18,7 +20,9 @@ app.use(express.static('dist'));
 app.use(express.static('public'));
 
 io.on('connection', socket => {
+    userCount++;
     console.log('A user connected with ID:', socket.id);
+    io.emit('userCount', userCount);
 
     // Handle username submission
     socket.on('username', username => {
@@ -29,12 +33,14 @@ io.on('connection', socket => {
 
     // Notify all clients that a user joined
     socket.on('disconnect', () => {
+        userCount--;
         if (socket.username) {
             console.log(`User ${socket.username} has left the chat`);
             io.emit('system', `${socket.username} has left the chat`);
         } else {
             console.log(`User disconnected without setting username`);
         }
+        io.emit('userCount', userCount);
     });
 
     // Handle incoming messages

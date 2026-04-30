@@ -4,10 +4,11 @@ import socketService from "./services/socketService"
 import UsernameModal from './components/UsernameModal.vue'
 
 // Refs
-const messageInput = ref('')
-const messages = ref([])
-const messagesContainer = ref(null)
-const showUsernameModal = ref(true)
+const messageInput = ref('');
+const messages = ref([]);
+const messagesContainer = ref(null);
+const showUsernameModal = ref(true);
+const userCount = ref(0);
 
 // Methods
 const scrollToBottom = async () => {
@@ -40,6 +41,10 @@ const handleKeydown = (e) => {
 onMounted(() => {
   socketService.connect()
 
+  socketService.on('userCount', (count) => {
+    userCount.value = count
+  })
+
   socketService.on('system', (msg) => {
     messages.value.push({
       type: "system",
@@ -69,7 +74,7 @@ onMounted(() => {
       <!-- Header -->
       <div class="bg-gradient-to-r from-yellow-600 to-yellow-700 p-4 shadow-md">
         <h1 class="text-white text-2xl font-bold">Chat Room</h1>
-        <p class="text-blue-100 text-sm">3 members online</p>
+        <p class="text-blue-100 text-sm">{{ userCount }} members online</p>
       </div>
 
       <!-- Messages Container -->
