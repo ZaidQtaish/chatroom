@@ -1,11 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 
-const messages = ref([
-  { id: 1, user: 'Alice', text: 'Hey, how are you?', timestamp: '10:30' },
-  { id: 2, user: 'You', text: 'I\'m doing great!', timestamp: '10:31' },
-  { id: 3, user: 'Alice', text: 'That\'s awesome!', timestamp: '10:32' }
-])
 const messageInput = ref('')
 
 const sendMessage = () => {
@@ -30,7 +25,7 @@ const handleKeydown = (e) => {
 
 <template>
   <div class="w-full h-screen flex items-center justify-center bg-gray-900">
-    <div class="w-full h-full max-w-2xl max-h-screen md:max-h-[90vh] md:rounded-lg bg-gray-800 flex flex-col shadow-2xl">
+    <div class="w-full h-full max-w-3xl max-h-screen md:max-h-[90vh] md:rounded-lg bg-gray-800 flex flex-col shadow-2xl">
       <!-- Header -->
       <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-4 shadow-md">
         <h1 class="text-white text-2xl font-bold">Chat Room</h1>
