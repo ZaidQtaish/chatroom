@@ -1,11 +1,13 @@
 <script setup>
 import { ref, onMounted, nextTick } from 'vue'
 import socketService from "./services/socketService"
+import UsernameModal from './components/UsernameModal.vue'
 
 // Refs
 const messageInput = ref('')
 const messages = ref([])
 const messagesContainer = ref(null)
+const showUsernameModal = ref(true)
 
 // Methods
 const scrollToBottom = async () => {
@@ -20,6 +22,11 @@ const sendMessage = () => {
     socketService.emit('message', messageInput.value)
     messageInput.value = ''
   }
+}
+
+const handleUsernameSubmit = (name) => {
+  socketService.emit('username', name)
+  showUsernameModal.value = false
 }
 
 const handleKeydown = (e) => {
@@ -85,6 +92,7 @@ onMounted(() => {
           </button>
         </div>
       </div>
+      <UsernameModal v-if="showUsernameModal" @submit="handleUsernameSubmit" />
     </div>
   </div>
 </template>
