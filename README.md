@@ -1,6 +1,6 @@
 # Chat Room
 
-A real-time chat application built with Node.js, Express, and Socket.IO.
+A real-time chat application built with Vue, Node.js, Express, and Socket.IO.
 
 **🔗 Live:** https://chatroom-35uw.onrender.com/
 
@@ -8,8 +8,10 @@ A real-time chat application built with Node.js, Express, and Socket.IO.
 
 - Real-time messaging with Socket.IO
 - User join/leave notifications
-- Responsive Bootstrap UI
-- Distinguish between your messages and others
+- Responsive Tailwind UI
+- Auto-scroll to latest messages
+- Username modal on join
+- Smooth message display
 
 ## Quick Start
 
@@ -17,17 +19,38 @@ A real-time chat application built with Node.js, Express, and Socket.IO.
 # Install dependencies
 npm install
 
-# Start server
+# Start backend server (terminal 1)
 node server.js
 
-# Open http://localhost:3000
+# Start frontend dev server (terminal 2)
+npm run dev
+
+# Open http://localhost:5174
 ```
 
 ## Tech Stack
 
 - **Backend**: Node.js, Express.js, Socket.IO
-- **Frontend**: HTML5, CSS3, JavaScript
-- **UI**: Bootstrap 5, Font Awesome 6
+- **Frontend**: Vue 3, Vite
+- **UI**: Tailwind CSS
+- **State Management**: Vue Composition API (ref, onMounted)
+
+## Project Structure
+
+```
+src/
+  components/
+    UsernameModal.vue    # Username input modal
+  services/
+    socketService.js     # Socket.IO wrapper
+  App.vue               # Main chat component
+  main.js              # Vue app entry
+server.js              # Express + Socket.IO backend
+```
+
+## Deployment
+
+Deployed on [Render](https://render.com/) with automatic scaling. Start command: `node server.js`
 
 ## Socket Events
 
@@ -37,20 +60,17 @@ node server.js
 | `message` | Client ↔ Server | Send/receive chat messages |
 | `system` | Server → All | Join/leave notifications |
 
-## File Overview
+## How It Works
 
-- **server.js**: Express + Socket.IO server, manages connections and broadcasts
-- **public/client.js**: Handles Socket.IO events and DOM updates
-- **public/index.html**: Chat UI with Bootstrap modal for username input
-- **public/style.css**: Custom styling
+1. **Frontend** emits `username` event when user joins
+2. **Backend** broadcasts `system` event to all clients
+3. **Frontend** sends `message` event when user types
+4. **Backend** broadcasts message to all connected clients
+5. **Frontend** receives and displays messages with auto-scroll
 
-## Deployment
+## Key Functions
 
-Deployed on [Render](https://render.com/) with automatic scaling. Start command: `node server.js`
-
-## Configuration
-
-Set custom port via environment variable:
-```bash
-PORT=8080 node server.js
-```
+- `socketService.emit()` - Send events to server
+- `socketService.on()` - Listen for events from server
+- `scrollToBottom()` - Auto-scroll chat on new messages
+- `handleUsernameSubmit()` - Process username from modal
