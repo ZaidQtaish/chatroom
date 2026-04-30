@@ -24,13 +24,13 @@ io.on('connection', socket => {
     socket.on('username', username => {
         socket.username = username;
         console.log(`Username set for ${socket.id}: ${username}`);
-        io.emit('system', `User ${username} has joined the chat`);
+        io.emit('system', `${username} has joined the chat`);
     });
 
     // Notify all clients that a user joined
     socket.on('disconnect', () => {
         console.log(`User ${socket.username} has left the chat`);
-        io.emit('system', `User ${socket.username} has left the chat`);
+        io.emit('system', `${socket.username} has left the chat`);
     });
 
     // Handle incoming messages

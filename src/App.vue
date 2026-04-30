@@ -39,7 +39,16 @@ const handleKeydown = (e) => {
 // Lifecycle
 onMounted(() => {
   socketService.connect()
-  socketService.emit('username', 'User')
+
+  socketService.on('system', (msg) => {
+    messages.value.push({
+      type: "system",
+      id: messages.value.length + 1,
+      text: msg,
+      timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+    })
+    scrollToBottom()
+  })
 
   socketService.on('message', (data) => {
     messages.value.push({
@@ -65,19 +74,29 @@ onMounted(() => {
 
       <!-- Messages Container -->
       <div ref="messagesContainer" class="flex-1 overflow-y-auto p-4 space-y-4 messages-container">
-        <div v-for="msg in messages" :key="msg.id" class="flex gap-3">
-          <div class="flex-shrink-0">
-            <div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center">
-              <span class="text-white text-xs font-bold">{{ msg.user[0] }}</span>
+        <div v-for="msg in messages" :key="msg.id">
+          
+          <!-- System Messages (centered, gray, italic) -->
+          <div v-if="msg.type === 'system'" class="flex justify-center py-2">
+            <span class="text-gray-400 text-sm">{{ msg.text }}</span>
+          </div>
+
+          <!-- Regular Messages (with avatar and user info) -->
+          <div v-else class="flex gap-3">
+            <div class="flex-shrink-0">
+              <div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center">
+                <span class="text-white text-xs font-bold">{{ msg.user[0] }}</span>
+              </div>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-baseline gap-2">
+                <span class="text-white font-semibold">{{ msg.user }}</span>
+                <span class="text-gray-400 text-xs">{{ msg.timestamp }}</span>
+              </div>
+              <p class="text-gray-300 mt-1">{{ msg.text }}</p>
             </div>
           </div>
-          <div class="flex-1">
-            <div class="flex items-baseline gap-2">
-              <span class="text-white font-semibold">{{ msg.user }}</span>
-              <span class="text-gray-400 text-xs">{{ msg.timestamp }}</span>
-            </div>
-            <p class="text-gray-300 mt-1">{{ msg.text }}</p>
-          </div>
+
         </div>
       </div>
 
@@ -98,23 +117,6 @@ onMounted(() => {
 </template>
 
 <style>
-/* Custom scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgb(31, 41, 55);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgb(75, 85, 99);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(107, 114, 128);
-}
 
 .messages-container {
   scroll-behavior: smooth;
