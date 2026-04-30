@@ -29,8 +29,12 @@ io.on('connection', socket => {
 
     // Notify all clients that a user joined
     socket.on('disconnect', () => {
-        console.log(`User ${socket.username} has left the chat`);
-        io.emit('system', `${socket.username} has left the chat`);
+        if (socket.username) {
+            console.log(`User ${socket.username} has left the chat`);
+            io.emit('system', `${socket.username} has left the chat`);
+        } else {
+            console.log(`User disconnected without setting username`);
+        }
     });
 
     // Handle incoming messages

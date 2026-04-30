@@ -77,7 +77,7 @@ onMounted(() => {
         <div v-for="msg in messages" :key="msg.id">
           
           <!-- System Messages (centered, gray, italic) -->
-          <div v-if="msg.type === 'system'" class="flex justify-center py-2">
+          <div v-if="msg.type === 'system'" class="flex justify-center py-1">
             <span class="text-gray-400 text-sm">{{ msg.text }}</span>
           </div>
 
